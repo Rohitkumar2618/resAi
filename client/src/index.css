@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body,
+html {
+  font-family: "";
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#main {
+  display: flex;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+  font-family: "rem";
+}
+
+.riskTimeAssessmentTable {
+  background-color: black;
+  color: white;
+}
+
+.riskTimeAssessmentTable th {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.riskTimeAssessmentTable td {
+  font-size: 0.9rem;
+}
+
+.riskTimeAssessmentTable tr,
+th,
+td {
+  border: 1px solid white;
+  padding: 5px 10px;
+}
+
+.veryLowRisk {
+  background-color: #617d61;
+}
+
+.lowRisk {
+  background-color: green;
+}
+
+.moderateRisk {
+  background-color: rgb(163, 65, 65);
+}
+
+.highRisk {
+  background-color: orange;
+}
+
+.veryHighRisk {
+  background-color: rgb(177, 43, 43);
+}
+
+.purple-filter {
+  filter: hue-rotate(240deg) saturate(500%) brightness(80%);
+}
+
+.mapLoaderStyles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100px;
+  margin: 0 auto;
+}
