@@ -20,50 +20,41 @@ const SignUp = (props) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    
-    // ... (keep your existing validations)
 
     const userData = {
-      organizationName,
-      email,
-      password,
-      isEnterprise
+        email,
+        password,
+        isEnterprise,
+        ...(isEnterprise && { organizationName }),
     };
 
     try {
-      // Make API call to backend
-      const response = await fetch('http://localhost:4000/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData)
-      });
+        const response = await fetch('http://localhost:4000/api/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (data.success) {
-        // Dispatch to Redux store
-        dispatch(signUp({
-          ...userData,
-          id: data.user.id,
-          token: data.token
-        }));
-        
-        toast.success("Account created successfully!");
-        
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
-      } else {
-        toast.error(data.message);
-      }
+        if (response.ok) {
+            dispatch(signUp({
+                id: data.user.id,
+                email: data.user.email,
+                organizationName: data.user.organizationName,
+                isEnterprise: data.user.isEnterprise,
+                token: data.token,
+            }));
+            toast.success("Account created successfully!");
+            setTimeout(() => navigate("/"), 2000);
+        } else {
+            toast.error(data.message || "Failed to sign up.");
+        }
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
-      console.error("Signup error:", error);
+        toast.error("Something went wrong. Please try again.");
+        console.error("Signup error:", error);
     }
 };
- 
 
 
 

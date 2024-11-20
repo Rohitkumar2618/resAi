@@ -11,31 +11,60 @@ const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isEnterprise, setIsEnterprise] = useState(true);
-
+const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getUserData = () => {
-    const user = localStorage.getItem("user"); // Retrieve user data from local storage
-    return user ? JSON.parse(user) : null; // Parse and return user object or null
-  };
+  // const getUserData = () => {
+  //   const user = localStorage.getItem("user"); // Retrieve user data from local storage
+  //   return user ? JSON.parse(user) : null; // Parse and return user object or null
+  // };
 
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const userData = getUserData(); // Get the stored user data
 
-    // Validate credentials against existing user data
-    if (userData) {
-      if (userData.email === username && userData.password === password) {
-        toast.success("Login successful!"); // Show success toast
-        navigate("/dashboard"); // Redirect to home page on successful login
-      } else {
-        toast.error("Invalid username or password"); // Show error toast
-      }
-    } else {
-      toast.error("User not found"); // Show error toast if user data is not present
+    // Prepare login data
+    const loginData = {
+        email: username, // Assuming `username` holds the entered email
+        password,
+    };
+
+    try {
+        // Make API call to backend for login
+        const response = await fetch('http://localhost:4000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loginData),
+        });
+
+        // Parse response
+        const data = await response.json();
+
+        if (response.ok) {
+            // Store user data in Redux or local storage
+            dispatch(logIn({
+                id: data.user.id,
+                email: data.user.email,
+                organizationName: data.user.organizationName,
+                isEnterprise: data.user.isEnterprise,
+                token: data.token,
+            }));
+
+            // Show success toast and redirect to dashboard
+            toast.success("Login successful!");
+            setTimeout(() => navigate("/dashboard"), 1000);
+        } else {
+            // Show backend error message
+            toast.error(data.message || "Invalid username or password");
+        }
+    } catch (error) {
+        // Handle network or other unexpected errors
+        toast.error("Something went wrong. Please try again.");
+        console.error("Login error:", error);
     }
-  };
+};
 
   useEffect(() => {
     document.title = props.title || "";
