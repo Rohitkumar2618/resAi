@@ -28,7 +28,9 @@ const OrganizationMapSidebar = () => {
 
         <div className=" absolute flex gap-2 mt-20 ml-2   ">
           {" "}
-          <RiArrowLeftLine /> <Link to="/dashboard">Back to Dashboard</Link>
+         <Link to="/dashboard" className="flex gap-1">
+         <RiArrowLeftLine /> Back to Dashboard
+         </Link>
         </div>
         <nav>
           <ul className="space-y-4 cursor-pointer">

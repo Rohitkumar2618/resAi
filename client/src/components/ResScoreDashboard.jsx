@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+// import { useEffect } from "react";
 
 import OrganizationMapSidebar from "./OrganizationMapSidebar";
 import OrganizationMapTopBar from "./OrganizationMapTopBar";
 import { useState } from "react";
-import OrganizationHome from "./OrganizationHome";
-import OrganizationProfile from "./OrganizationProfile";
-import OrganizationPreparedness from "./OrganizationPreparedness";
+// import OrganizationHome from "./OrganizationHome";
+// import OrganizationProfile from "./OrganizationProfile";
+// import OrganizationPreparedness from "./OrganizationPreparedness";
 import OrganizationInsights from "./OrganizationInsights";
 import ResScoreGuidePageHome from "./ResScoreGuidePageHome ";
 import ResScoreGuidepageProfile from "./ResScoreGuidepageProfile";
 import ResScoreGuidepagePreparedness from "./ResScoreGuidepagePreparedness";
-const ResScoreDashboard = (props) => {
+const ResScoreDashboard = (
+  // props
+
+) => {
   const [activeTab, setActiveTab] = useState("home");
 
   const renderContent = () => {
@@ -28,9 +31,9 @@ const ResScoreDashboard = (props) => {
     }
   };
 
-  useEffect(() => {
-    document.title = props.title || "";
-  }, [props.title]);
+  // useEffect(() => {
+  //   document.title = props.title || "";
+  // }, [props.title]);
 
   return (
     <div className="w-full h-screen flex">

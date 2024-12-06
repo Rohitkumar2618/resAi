@@ -1,6 +1,6 @@
 import { LuFileBarChart2 } from "react-icons/lu";
 import Chart from "react-apexcharts";
-import HeatMapI from "../assets/Horizontal container.png";
+// import HeatMapI from "../assets/Horizontal container.png";
 
 const generateData = (length, { min, max }) => {
   return Array.from(

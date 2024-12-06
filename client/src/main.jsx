@@ -13,7 +13,7 @@ import ForgetPassword from "./components/ForgetPassword.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Workspace from "./components/Workspace.jsx";
 import Map from "./components/Map.jsx";
-import MapMain from "./components/MapMain.jsx";
+// import MapMain from "./components/MapMain.jsx";
 import GuidePage from "./components/GuidePage.jsx";
 import DataSource from "./components/DataSource.jsx";
 import ResSuiteDashboard from "./components/ResSuiteDashboard.jsx";

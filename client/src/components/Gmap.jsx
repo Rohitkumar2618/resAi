@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import  { useEffect, useState,  } from "react";
 import { useSelector } from "react-redux";
 import GoogleMapReact from "google-map-react";
 import axios from 'axios';
@@ -54,7 +54,7 @@ const Gmap = () => {
         center: { lat: mapDataToShow.features[0].geometry.coordinates[0][0][1], lng: mapDataToShow.features[0].geometry.coordinates[0][0][0] },
         zoom: 22
       });
-      mapDataToShow.features.map((ftr, indx) => {
+      mapDataToShow.features.map((ftr, index) => {
         //if (indx < 10) {
 
 

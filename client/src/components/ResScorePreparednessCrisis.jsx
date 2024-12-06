@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { CiCircleInfo } from "react-icons/ci";
+import { Tooltip } from "react-tooltip";
 
 const ResScorePreparednessCrisis = ({ onInputChange }) => {
   // Local state to keep track of inputs
@@ -18,6 +20,7 @@ const ResScorePreparednessCrisis = ({ onInputChange }) => {
     C13: "",
     C14: "",
   });
+  const [selectedRange, setSelectedRange] = useState();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,11 +33,28 @@ const ResScorePreparednessCrisis = ({ onInputChange }) => {
       {/* C1 */}
       <div>
         <span className="text-[14px] ml-1 text-[#555459]">
-          <span className="mr-2">C1.</span>
-          <span>
-            Is your organization/department compliant with the Environment
-            Impact Assessment (EIA)?*
-          </span>
+          <div className="flex">
+            <span className="mr-2">C1.</span>
+            <span>
+              Is your organization/department compliant with the Environment
+              Impact Assessment (EIA)?*
+            </span>
+            <span className="ml-1">
+              <CiCircleInfo
+                size="20px"
+                data-tooltip-id="tooltip-id" // Unique tooltip ID
+                data-tooltip-content="Hello This is me rk!" // Tooltip content
+                className="cursor-pointer"
+              />
+              <Tooltip
+                id="tooltip-id" // Match the tooltip ID
+                place="top"
+                type="dark"
+                effect="solid"
+                style={{ backgroundColor: "indigo", color: "#fff" }}
+              />
+            </span>
+          </div>
           <input
             type="text"
             name="C1"
@@ -47,7 +67,7 @@ const ResScorePreparednessCrisis = ({ onInputChange }) => {
       </div>
 
       {/* C2 */}
-      <div className="mt-2">
+      {/* <div className="mt-2">
         <span className="text-[14px] ml-1 text-[#555459]">
           <span className="mr-2">C2.</span>
           <span>
@@ -63,9 +83,47 @@ const ResScorePreparednessCrisis = ({ onInputChange }) => {
             className="p-2 ml-3 border-b-2 w-[90%]"
           />
         </span>
+      </div> */}
+
+      {/* C2 */}
+      <div>
+      <div className="mt-5">
+          <span className="text-[14px] ml-1 text-[#555459]">
+            <span className="mr-2">C2.</span>
+            <span className="">
+              Is your organization/department compliant with the green and
+              sustainability building design guidelines?
+            </span>
+          </span>
+        </div>
+        <select
+          className="p-2 ml-8 mt-1 border-b-1 w-[90%] border border-gray-300 text-gray-700"
+          value={answers.C2 || ""} // Use C2 from answers
+          onChange={(e) => {
+            setAnswers((prevAnswers) => ({
+              ...prevAnswers,
+              C2: e.target.value, // Update C2 field in answers
+            }));
+            onInputChange({ ...answers, C2: e.target.value }); // Send to parent
+          }}
+        >
+          <option value="" disabled hidden style={{ color: "#A9A9A9" }}>
+            Select Range
+          </option>
+          <option value="option1">~Select Option</option>
+          <option value="option2">
+            Guidelines comprise of 'Standardized Development and Building
+            Regulations, 2023', 'Eco Niwas Samhita
+          </option>
+          <option value="option3">
+            ENS with Energy Conservation and Sustainable Building Code for
+            Commercial and Office Buildings 2024
+          </option>
+        </select>
       </div>
 
-      {/* C3 */}
+      
+
       <div className="mt-2">
         <span className="text-[14px] ml-1 text-[#555459]">
           <span className="mr-2">C3.</span>

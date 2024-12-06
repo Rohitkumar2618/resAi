@@ -138,9 +138,9 @@ import ArrowI from "../assets/arrow.svg";
 import ResScorePreparednessCrisis from "./ResScorePreparednessCrisis";
 import ResScorePreparednessEconomics from "./ResScorePreparednessEconomics";
 import ResScorePreparednessPhysical from "./ResScorePreparednessPhysical";
-import ResScorePreparednesssStrategies from "./ResScorePreparednesssStrategies";
-import ResScorePreparednesssSocial from "./ResScorePreparednesssSocial";
-import ResScorePreparednesssEnvironment from "./ResScorePreparednesssEnvironment";
+// import ResScorePreparednesssStrategies from "./ResScorePreparednesssStrategies";
+import ResScorePreparednesssSocial from "./ResScorePreparednessSocial";
+// import ResScorePreparednesssEnvironment from "./ResScorePreparednesssEnvironment";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -153,6 +153,9 @@ import {
   updateEnvironment,
   updateSocial,
 } from "../components/Redux/slices/preparedness";
+import ResScorePreparednessStrategies from "./ResScorePreparednessStrategies";
+import ResScorePreparednessEnvironment from "./ResScorePreparednessEnvironment";
+import axios from "axios";
 
 const ResScoreGuidepagePreparedness = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -168,7 +171,39 @@ const ResScoreGuidepagePreparedness = () => {
 
   const dispatch = useDispatch();
 
-  const nextStep = () => {
+  // const nextStep = () => {
+  //   const stepKeys = [
+  //     "crisis",
+  //     "economics",
+  //     "physical",
+  //     "strategies",
+  //     "environment",
+  //     "social",
+  //   ];
+
+  //   // Update only the current step data in the Redux slice
+  //   const currentKey = stepKeys[currentStep - 1];
+  //   const currentData = formData[currentKey];
+  //   const updateActions = {
+  //     crisis: updateCrisis,
+  //     economics: updateEconomics,
+  //     physical: updatePhysical,
+  //     strategies: updateStrategies,
+  //     environment: updateEnvironment,
+  //     social: updateSocial,
+  //   };
+
+  //   if (currentStep < 6) {
+  //     dispatch(updateActions[currentKey](currentData));
+  //     setCurrentStep((prevStep) => prevStep + 1);
+  //   } else {
+  //     // Final step: dispatch all form data to `updateAllPreparedness`
+  //     dispatch(updateAllPreparedness(formData));
+  //     toast.success("Form Submitted Successfully!");
+  //   }
+  // };
+
+  const nextStep = async () => {
     const stepKeys = [
       "crisis",
       "economics",
@@ -177,8 +212,7 @@ const ResScoreGuidepagePreparedness = () => {
       "environment",
       "social",
     ];
-
-    // Update only the current step data in the Redux slice
+  
     const currentKey = stepKeys[currentStep - 1];
     const currentData = formData[currentKey];
     const updateActions = {
@@ -189,16 +223,31 @@ const ResScoreGuidepagePreparedness = () => {
       environment: updateEnvironment,
       social: updateSocial,
     };
-
+  
     if (currentStep < 6) {
+      // Dispatch the current step's data to Redux and move to the next step
       dispatch(updateActions[currentKey](currentData));
       setCurrentStep((prevStep) => prevStep + 1);
     } else {
-      // Final step: dispatch all form data to `updateAllPreparedness`
+      // Final step: Submit the form data to the backend
       dispatch(updateAllPreparedness(formData));
-      toast.success("Form Submitted Successfully!");
+  
+      try {
+        const response = await axios.post("http://localhost:4000/api/resscore/save", formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        toast.success("Form Submitted Successfully!");
+        console.log("Saved Data:", response.data);
+      } catch (error) {
+        toast.error("Failed to submit form. Please try again.");
+        console.error("Error saving data:", error);
+      }
     }
   };
+  
+
 
   const handleInputChange = (key, data) => {
     setFormData((prevData) => ({
@@ -211,22 +260,22 @@ const ResScoreGuidepagePreparedness = () => {
 
   const renderStepComponent = () => {
     const stepComponents = [
-      <ResScorePreparednessCrisis
+      <ResScorePreparednessCrisis key={0}
         onInputChange={(data) => handleInputChange("crisis", data)}
       />,
-      <ResScorePreparednessEconomics
+      <ResScorePreparednessEconomics key={1}
         onInputChange={(data) => handleInputChange("economics", data)}
       />,
-      <ResScorePreparednessPhysical
+      <ResScorePreparednessPhysical  key={2}
         onInputChange={(data) => handleInputChange("physical", data)}
       />,
-      <ResScorePreparednesssStrategies
+      <ResScorePreparednessStrategies key={3}
         onInputChange={(data) => handleInputChange("strategies", data)}
       />,
-      <ResScorePreparednesssEnvironment
+      <ResScorePreparednessEnvironment key={4}
         onInputChange={(data) => handleInputChange("environment", data)}
       />,
-      <ResScorePreparednesssSocial
+      <ResScorePreparednesssSocial key={5}
         onInputChange={(data) => handleInputChange("social", data)}
       />,
     ];

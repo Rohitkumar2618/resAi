@@ -8,7 +8,9 @@ import MapViewI from "../assets/mist-line.png";
 import { Plus } from "lucide-react";
 import GraphI from "../assets/graph.png";
 
-const OrganizationMapTopBar = ({ setActiveTab, activeTab }) => {
+const OrganizationMapTopBar = (
+  { setActiveTab, activeTab }
+) => {
   const [cities, setCities] = useState([]);
   const [areas, setAreas] = useState([]);
   const [selectedCity, setSelectedCity] = useState("Delhi");

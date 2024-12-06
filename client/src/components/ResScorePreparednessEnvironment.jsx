@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-const ResScorePreparednessEnvironment = ({ onInputChange }) => {
+const ResScorePreparednessEnvironment = (
+  { onInputChange }
+) => {
   // Local state to manage the responses
   const [responses, setResponses] = useState({
     ev1: "",
